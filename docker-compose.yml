@@ -9,8 +9,8 @@ services:
     environment:
       - DATABASE_URL=postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-LANGFUSE_3k4jnf9cdn3orivnldskcvnb30reib3}@db:5432/${POSTGRES_DB:-postgres}
       - NEXTAUTH_SECRET=${LANGFUSE_SECRET:-dkvn20n2smicds02mi0499cn}
-      - SALT=mysalt
-      - ENCRYPTION_KEY=0000000000000000000000000000000000000000000000000000000000000000 # generate via `openssl rand -hex 32`
+      - SALT=kamimind
+      - ENCRYPTION_KEY=92ca2cc5889a7469e23612beda4f362e1cdc645e30797800fe47aac70b8e77e7 # generate via `openssl rand -hex 32`
       - NEXTAUTH_URL=https://langufse.kamimind.ai
       - TELEMETRY_ENABLED=${TELEMETRY_ENABLED:-true}
       - LANGFUSE_ENABLE_EXPERIMENTAL_FEATURES=${LANGFUSE_ENABLE_EXPERIMENTAL_FEATURES:-false}
