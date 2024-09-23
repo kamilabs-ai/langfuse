@@ -5,6 +5,7 @@ import { DataTableToolbar } from "@/src/components/table/data-table-toolbar";
 import TableLink from "@/src/components/table/table-link";
 import { type LangfuseColumnDef } from "@/src/components/table/types";
 import { IOTableCell } from "@/src/components/ui/CodeJsonViewer";
+import useColumnOrder from "@/src/features/column-visibility/hooks/useColumnOrder";
 import useColumnVisibility from "@/src/features/column-visibility/hooks/useColumnVisibility";
 import { type RouterOutputs, api } from "@/src/utils/api";
 import { createColumnHelper } from "@tanstack/react-table";
@@ -155,6 +156,11 @@ export default function EvalLogTable({
   const [columnVisibility, setColumnVisibility] =
     useColumnVisibility<JobExecutionRow>("evalLogColumnVisibility", columns);
 
+  const [columnOrder, setColumnOrder] = useColumnOrder<JobExecutionRow>(
+    "evalLogColumnOrder",
+    columns,
+  );
+
   const convertToTableRow = (
     jobConfig: RouterOutputs["evals"]["getLogs"]["data"][number],
   ): JobExecutionRow => {
@@ -173,11 +179,13 @@ export default function EvalLogTable({
   };
 
   return (
-    <div>
+    <>
       <DataTableToolbar
         columns={columns}
         columnVisibility={columnVisibility}
         setColumnVisibility={setColumnVisibility}
+        columnOrder={columnOrder}
+        setColumnOrder={setColumnOrder}
         rowHeight={rowHeight}
         setRowHeight={setRowHeight}
       />
@@ -205,7 +213,9 @@ export default function EvalLogTable({
         }}
         columnVisibility={columnVisibility}
         onColumnVisibilityChange={setColumnVisibility}
+        columnOrder={columnOrder}
+        onColumnOrderChange={setColumnOrder}
       />
-    </div>
+    </>
   );
 }

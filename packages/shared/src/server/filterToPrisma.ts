@@ -1,8 +1,9 @@
 import { Prisma } from "@prisma/client";
-import { ColumnDefinition, type TableNames } from "./tableDefinitions";
-import { FilterState } from "./types";
-import { filterOperators, timeFilter } from "./interfaces/filters";
+import { ColumnDefinition, type TableNames } from "../tableDefinitions";
+import { FilterState } from "../types";
+import { filterOperators, timeFilter } from "../interfaces/filters";
 import { z } from "zod";
+import { logger } from "./index";
 
 const operatorReplacements = {
   "any of": "IN",
@@ -51,7 +52,7 @@ export function tableColumnsToSqlFilter(
         c.name === filter.column || c.id === filter.column
     );
     if (!col) {
-      console.error("Invalid filter column", filter.column);
+      logger.error("Invalid filter column", filter.column);
       throw new Error("Invalid filter column: " + filter.column);
     }
     const colPrisma = Prisma.raw(col.internal);

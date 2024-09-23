@@ -16,10 +16,7 @@ import { useQueryOrganization } from "@/src/features/organizations/hooks";
 import { Card } from "@/src/components/ui/card";
 import { numberFormatter, compactNumberFormatter } from "@/src/utils/numbers";
 import { useHasOrgEntitlement } from "@/src/features/entitlements/hooks";
-import {
-  type Plan,
-  planLabels,
-} from "@/src/features/entitlements/constants/plans";
+import { type Plan, planLabels } from "@langfuse/shared";
 import { stripeProducts } from "@/src/ee/features/billing/utils/stripeProducts";
 import { useRouter } from "next/router";
 import {
@@ -29,6 +26,7 @@ import {
 import { env } from "@/src/env.mjs";
 import { useHasOrganizationAccess } from "@/src/features/rbac/utils/checkOrganizationAccess";
 import { Alert, AlertDescription, AlertTitle } from "@/src/components/ui/alert";
+import { MAX_OBSERVATIONS_FREE_PLAN } from "@/src/ee/features/billing/constants";
 
 export const BillingSettings = () => {
   const router = useRouter();
@@ -75,7 +73,8 @@ const OrganizationUsageChart = () => {
     },
   );
   const planLimit =
-    organization?.cloudConfig?.monthlyObservationLimit ?? 50_000;
+    organization?.cloudConfig?.monthlyObservationLimit ??
+    MAX_OBSERVATIONS_FREE_PLAN;
   const plan: Plan = organization?.plan ?? "cloud:hobby";
   const planLabel = planLabels[plan];
 
@@ -86,7 +85,7 @@ const OrganizationUsageChart = () => {
           <>
             <Text>
               {usage.data.billingPeriod
-                ? `Observations in billing period`
+                ? `Observations in current billing period`
                 : "Observations / last 30d"}
             </Text>
             <Metric>{numberFormatter(usage.data.countObservations, 0)}</Metric>

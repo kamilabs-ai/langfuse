@@ -8,6 +8,7 @@ updates:
   - package-ecosystem: npm
     directory: "/" # Location of package manifests
     rebase-strategy: "disabled" # use dependabot-rebase-stale
+    open-pull-requests-limit: 10
     schedule:
       interval: "daily"
     versioning-strategy: "increase"
@@ -27,6 +28,14 @@ updates:
         patterns:
           - "eslint-config-next"
           - "next"
+      lodash:
+        patterns:
+          - "lodash"
+          - "@types/lodash"
+      express:
+        patterns:
+          - "express"
+          - "@types/express"
       observability:
         patterns:
           - "dd-trace"
@@ -34,3 +43,6 @@ updates:
           - "@appsignal/opentelemetry-instrumentation-bullmq"
           - "@prisma/instrumentation"
           - "@sentry/*"
+      radix-ui:
+        patterns:
+          - "@radix-ui/*"
